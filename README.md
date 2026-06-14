@@ -48,3 +48,9 @@ uv run python -m assistant.bot
 ```sh
 uv run pytest
 ```
+
+## Deploy
+
+The bot uses long-polling (outbound-only, no public URL needed) and must run as a
+single always-on instance. For a homelab setup (Proxmox LXC + systemd), see
+[docs/deploy-homelab.md](docs/deploy-homelab.md).
