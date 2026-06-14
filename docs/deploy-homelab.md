@@ -7,6 +7,19 @@ forwarding, reverse proxy, or public URL is needed.
 > Run it in exactly one place. If this service is active, do not also run the bot on
 > your laptop or a cloud host: two pollers cause a Telegram `409 Conflict`.
 
+## Quick install
+
+Create a Debian/Ubuntu LXC, open a root shell in it (`pct enter <vmid>`), then run:
+
+```sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/skyth3r/telegram-assistant/main/install.sh)"
+```
+
+`install.sh` does everything below (deps, service user, clone, `uv sync`, systemd
+service) and prompts for your bot token and chat id. It is idempotent — re-run it to
+update to the latest `main`. For non-interactive use, export `TELEGRAM_BOT_TOKEN` and
+`TELEGRAM_CHAT_ID` first. The manual steps below document what it does.
+
 ## 1. Create the LXC
 
 On the Proxmox host, create an unprivileged Debian 12 container (256 MB RAM is plenty).
@@ -21,7 +34,7 @@ Debian already ships system tz data, so `ZoneInfo("Europe/London")` works out of
 ## 2. Create a service user and fetch the code
 
 ```sh
-useradd --system --create-home --home-dir /opt/telegram-assistant --shell /usr/sbin/nologin telegram
+useradd --system --home-dir /opt/telegram-assistant --shell /usr/sbin/nologin telegram
 git clone https://github.com/skyth3r/telegram-assistant.git /opt/telegram-assistant
 chown -R telegram:telegram /opt/telegram-assistant
 ```

@@ -52,5 +52,11 @@ uv run pytest
 ## Deploy
 
 The bot uses long-polling (outbound-only, no public URL needed) and must run as a
-single always-on instance. For a homelab setup (Proxmox LXC + systemd), see
-[docs/deploy-homelab.md](docs/deploy-homelab.md).
+single always-on instance. For a homelab setup (Proxmox LXC + systemd), run inside a
+Debian/Ubuntu LXC:
+
+```sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/skyth3r/telegram-assistant/main/install.sh)"
+```
+
+See [docs/deploy-homelab.md](docs/deploy-homelab.md) for details and manual steps.
