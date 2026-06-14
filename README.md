@@ -48,3 +48,18 @@ uv run python -m assistant.bot
 ```sh
 uv run pytest
 ```
+
+## Deploy
+
+The bot uses long-polling (outbound-only, no public URL needed) and must run as a
+single always-on instance. For a homelab setup (Proxmox LXC + systemd):
+
+```sh
+# On the Proxmox host — creates the LXC, then drops you in to finish setup:
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/skyth3r/telegram-assistant/main/proxmox-create.sh)"
+
+# Or, inside an existing Debian/Ubuntu LXC:
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/skyth3r/telegram-assistant/main/install.sh)"
+```
+
+See [docs/deploy-homelab.md](docs/deploy-homelab.md) for details and manual steps.
