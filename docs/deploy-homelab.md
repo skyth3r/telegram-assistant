@@ -9,16 +9,36 @@ forwarding, reverse proxy, or public URL is needed.
 
 ## Quick install
 
-Create a Debian/Ubuntu LXC, open a root shell in it (`pct enter <vmid>`), then run:
+### Option A — from the Proxmox host (creates the LXC for you)
+
+Run on the **Proxmox host** root shell:
+
+```sh
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/skyth3r/telegram-assistant/main/proxmox-create.sh)"
+```
+
+`proxmox-create.sh` prompts for container settings (with defaults), downloads the Debian
+12 template if needed, creates an unprivileged LXC, then drops you into it. Inside, run
+`bash /root/install.sh` to finish — it prompts for your bot token and chat id and starts
+the service.
+
+### Option B — inside an existing LXC
+
+If you already have a Debian/Ubuntu LXC, open a root shell in it (`pct enter <vmid>`) and
+run:
 
 ```sh
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/skyth3r/telegram-assistant/main/install.sh)"
 ```
 
-`install.sh` does everything below (deps, service user, clone, `uv sync`, systemd
-service) and prompts for your bot token and chat id. It is idempotent — re-run it to
-update to the latest `main`. For non-interactive use, export `TELEGRAM_BOT_TOKEN` and
-`TELEGRAM_CHAT_ID` first. The manual steps below document what it does.
+`install.sh` does everything in the manual steps below (deps, service user, clone,
+`uv sync`, systemd service) and prompts for your token and chat id. It is idempotent —
+re-run it to update to the latest `main`. For non-interactive use, export
+`TELEGRAM_BOT_TOKEN` and `TELEGRAM_CHAT_ID` first.
+
+## Manual steps
+
+The rest of this document is the equivalent manual procedure (what the scripts automate).
 
 ## 1. Create the LXC
 
