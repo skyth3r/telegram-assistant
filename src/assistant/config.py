@@ -20,6 +20,13 @@ class Config:
     summary_tz: str
     upcoming_days: int
     stadium_url: str
+    allowed_chat_ids: list[int]
+
+
+def _parse_chat_ids(raw: str, fallback: str) -> list[int]:
+    """Parse comma-separated chat ids; fall back to [fallback] when empty."""
+    ids = [int(part.strip()) for part in raw.split(",") if part.strip()]
+    return ids or [int(fallback)]
 
 
 def load_config() -> Config:
@@ -41,4 +48,5 @@ def load_config() -> Config:
         summary_tz=os.environ.get("SUMMARY_TZ", "Europe/London"),
         upcoming_days=int(os.environ.get("UPCOMING_DAYS", "14")),
         stadium_url=os.environ.get("STADIUM_URL", STADIUM_URL),
+        allowed_chat_ids=_parse_chat_ids(os.environ.get("ALLOWED_CHAT_IDS", ""), chat_id),
     )

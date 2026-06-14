@@ -5,7 +5,7 @@ A personal Telegram assistant that sends daily summaries and responds to command
 Currently it tracks **London Stadium event days** (useful as a parking heads-up):
 
 - A daily summary at 07:00 Europe/London saying whether today is a stadium event day.
-- An `/event-day` command returning today's status plus upcoming events.
+- An `/event_day` command returning today's status plus upcoming events.
 
 ## Setup
 
@@ -26,9 +26,16 @@ cp .env.example .env   # then fill in your values
 | `SUMMARY_TZ`          | no       | `Europe/London`                                  | Timezone for the summary time        |
 | `UPCOMING_DAYS`       | no       | `14`                                             | Window for upcoming events           |
 | `STADIUM_URL`         | no       | `https://www.london-stadium.com/events/all.html` | Source page                          |
+| `ALLOWED_CHAT_IDS`    | no       | `TELEGRAM_CHAT_ID`                               | Comma-separated chat ids allowed to use commands |
 
 Get your chat id by messaging the bot and checking
 `https://api.telegram.org/bot<TOKEN>/getUpdates`.
+
+### Privacy / access
+
+Commands are restricted to the chat ids in `ALLOWED_CHAT_IDS` (defaults to
+`TELEGRAM_CHAT_ID`). Messages from any other chat are silently ignored, so the bot's
+contents stay private even though its `@username` is publicly reachable.
 
 ## Run
 
