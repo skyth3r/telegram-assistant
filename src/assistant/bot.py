@@ -6,7 +6,7 @@ import logging
 from datetime import time
 from zoneinfo import ZoneInfo
 
-from telegram.ext import Application, CommandHandler, ContextTypes
+from telegram.ext import Application, CommandHandler, ContextTypes, filters
 
 from assistant.commands import COMMANDS
 from assistant.config import Config, load_config
@@ -38,8 +38,10 @@ def build_application(config: Config) -> Application:
     app.bot_data["stadium_url"] = config.stadium_url
     app.bot_data["upcoming_days"] = config.upcoming_days
 
+    # Restrict every command to allowlisted chats; unknown chats are silently ignored.
+    chat_filter = filters.Chat(chat_id=config.allowed_chat_ids)
     for spec in COMMANDS:
-        app.add_handler(CommandHandler(spec.name, spec.handler))
+        app.add_handler(CommandHandler(spec.name, spec.handler, filters=chat_filter))
 
     hour, minute = (int(part) for part in config.summary_time.split(":"))
     app.job_queue.run_daily(
