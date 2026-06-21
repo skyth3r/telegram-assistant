@@ -105,11 +105,10 @@ it responds. The daily summary fires at `SUMMARY_TIME` (07:00 Europe/London by d
 ## Updating
 
 ```sh
-cd /opt/telegram-assistant
-sudo -u telegram git pull
-sudo -u telegram /usr/local/bin/uv sync --frozen
-systemctl restart telegram-assistant
+update
 ```
+
+This pulls the latest code, upgrades system packages, syncs dependencies, and restarts the service. The `update` command is installed to `/usr/local/bin/update` by `install.sh` — it is also refreshed on each run so it stays current.
 
 ## Troubleshooting
 
