@@ -103,8 +103,13 @@ systemctl enable --quiet "$SERVICE"
 systemctl restart "$SERVICE"
 ok "Service enabled and (re)started"
 
+msg "Installing update command"
+install -m 755 "$APP_DIR/update.sh" /usr/local/bin/update
+ok "update command installed — type 'update' to update the bot"
+
 echo
 ok "Done. Useful commands:"
+echo "    update                          — pull latest code and restart"
 echo "    systemctl status $SERVICE"
 echo "    journalctl -u $SERVICE -f"
 echo "    edit secrets: nano $APP_DIR/.env && systemctl restart $SERVICE"
