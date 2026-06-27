@@ -16,7 +16,7 @@ from dataclasses import dataclass
 from telegram import Update
 from telegram.ext import ContextTypes
 
-from assistant.commands import event_day
+from assistant.commands import bins, event_day
 
 Handler = Callable[[Update, ContextTypes.DEFAULT_TYPE], Awaitable[None]]
 
@@ -33,5 +33,10 @@ COMMANDS: list[CommandSpec] = [
         name="event_day",
         handler=event_day.event_day,
         description="Is today a stadium event day, plus upcoming events",
+    ),
+    CommandSpec(
+        name="bins",
+        handler=bins.bins,
+        description="Upcoming bin collection days",
     ),
 ]

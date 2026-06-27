@@ -27,9 +27,27 @@ cp .env.example .env   # then fill in your values
 | `UPCOMING_DAYS`       | no       | `14`                                             | Window for upcoming events           |
 | `STADIUM_URL`         | no       | `https://www.london-stadium.com/events/all.html` | Source page                          |
 | `ALLOWED_CHAT_IDS`    | no       | `TELEGRAM_CHAT_ID`                               | Comma-separated chat ids allowed to use commands |
+| `BIN_COUNCIL`         | no       | —                                                | uk-bin-collection module for a London borough; blank disables bins |
+| `BIN_COUNCIL_URL`     | no       | —                                                | Council bin-lookup URL for the module |
+| `BIN_UPRN`            | no       | —                                                | Property UPRN (or use postcode + house number) |
+| `BIN_POSTCODE`        | no       | —                                                | Property postcode, for boroughs that need it |
+| `BIN_HOUSE_NUMBER`    | no       | —                                                | House number, for boroughs that need it |
+| `BIN_WEB_DRIVER`      | no       | —                                                | Remote Selenium URL, for boroughs that need a browser |
+| `BIN_SKIP_GET_URL`    | no       | `true`                                           | Pass `-s` to the council module |
+| `BIN_REMINDER_TIME`   | no       | `20:00`                                          | Time (HH:MM, `SUMMARY_TZ`) to remind the night before |
 
 Get your chat id by messaging the bot and checking
 `https://api.telegram.org/bot<TOKEN>/getUpdates`.
+
+### Bin collection reminder
+
+When `BIN_COUNCIL` is set, the bot checks collections nightly at `BIN_REMINDER_TIME`
+and messages the chat only when something is out the next day. `/bins` shows the
+upcoming schedule on demand. Lookups use the
+[uk-bin-collection](https://pypi.org/project/uk-bin-collection/) package; supported
+boroughs are the London ones in `LONDON_BOROUGHS`
+(`src/assistant/sources/bins.py`). Find your UPRN at
+[findmyaddress.co.uk](https://www.findmyaddress.co.uk/search).
 
 ### Privacy / access
 
