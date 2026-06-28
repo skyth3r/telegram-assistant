@@ -12,14 +12,18 @@ from assistant.sources.bins import BinCollection
 from assistant.sources.stadium import Event, events_in_next_days, is_event_today
 
 
-def today_status(events: list[Event], *, now: datetime | None = None) -> str:
-    event = is_event_today(events, now=now)
-    if event is None:
-        return "✅ No stadium event at London Stadium today."
+def event_day_text(event: Event) -> str:
     return (
         "\U0001f3df Today is a stadium event day:\n"
         f"{event.name}\n{event.timestamp}"
     )
+
+
+def today_status(events: list[Event], *, now: datetime | None = None) -> str:
+    event = is_event_today(events, now=now)
+    if event is None:
+        return "✅ No stadium event at London Stadium today."
+    return event_day_text(event)
 
 
 def upcoming(events: list[Event], days: int, *, now: datetime | None = None) -> str:
