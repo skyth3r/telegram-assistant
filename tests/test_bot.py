@@ -22,9 +22,9 @@ def test_build_application_registers_all_commands():
     assert handler_count == len(COMMANDS)
 
 
-def test_build_application_schedules_daily_summary():
+def test_build_application_schedules_morning_summary():
     app = build_application(make_config())
-    jobs = app.job_queue.get_jobs_by_name("daily_summary")
+    jobs = app.job_queue.get_jobs_by_name("morning_summary")
     assert len(jobs) == 1
 
 
